@@ -1,0 +1,26 @@
+[{
+	"id": 1,
+	"nom" : "image01",
+	"descriptions" : "ma superbe image 1",
+	"filename" : "nom_upload_01.jpg",
+	"content/type" : "image/jpeg",
+	"tag" : [{
+		"id" : 1,
+		"nom" : "tag1"
+	},
+	{
+		"id" : 2,
+		"nom" : "tag2"
+	}]
+},
+{
+	"id": 2,
+	"nom" : "image02",
+	"descriptions" : "ma superbe image 2",
+	"filename" : "nom_upload_02.jpg",
+	"content/type" : "image/jpeg",
+	"tag" : [{
+		"id" : 2,
+		"nom" : "tag2"
+	}]
+}]
