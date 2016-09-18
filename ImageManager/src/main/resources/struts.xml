@@ -10,12 +10,36 @@
 
     <package name="default" namespace="/" extends="json-default">
 
-        <default-action-ref name="index"/>
+        <default-action-ref name="image"/>
 
-        <action name="index" class="org.xstio.ImageManager.actions.IndexAction" method="index" >
-            <result name="success">/index.jsp</result>
+        <action name="image" class="org.xstio.ImageManager.actions.ImageAction" method="list" >
+            <result name="success" type="json">
+            	<param name="root">images</param>
+            	<param name="excludeProperties">
+            		.*galerie.*
+        			.*tags.images.*
+            	</param>
+			</result>
         </action>
-
+        <action name="image/*" class="org.xstio.ImageManager.actions.ImageAction" method="listGalerie" >
+        	<result name="success" type="json">
+        		<param name="root">images</param>
+        		<param name="excludeProperties">
+        			.*galerie.*
+        		</param>
+        		<param name="galId">{1}</param>
+        	</result>
+        </action>
+		<!-- <action name="produit"
+        		class="com.courtalon.produitBioForm.actions.ProduitAction"
+         		method="liste" >
+            <result name="success" type="json">
+            	<param name="root">produits</param>
+            	<param name="excludeProperties">
+            		.*categorie.*
+            	</param>
+            </result>
+        </action> -->
     </package>
 
     <!-- Add addition packages and configuration here. -->

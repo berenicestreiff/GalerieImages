@@ -83,6 +83,13 @@
 		      <artifactId>spring-orm</artifactId>
 		      <version>${spring.version}</version>
     	</dependency>
+    	<!-- spring data jpa permet d'automatiser les DAO -->
+    	<dependency>
+    		<groupId>org.springframework.data</groupId>
+    		<artifactId>spring-data-jpa</artifactId>
+    		<version>1.9.4.RELEASE</version>
+    	</dependency>
+    	
 		<dependency>
 			<groupId>org.aspectj</groupId>
 			<artifactId>aspectjweaver</artifactId>
@@ -142,6 +149,12 @@
 			<artifactId>mysql-connector-java</artifactId>
 			<version>5.1.36</version>
 		</dependency>
+		
+		<dependency>
+        	<groupId>commons-codec</groupId>
+        	<artifactId>commons-codec</artifactId>
+        	<version>1.10</version>
+        </dependency>
     </dependencies>
 
   <build>
