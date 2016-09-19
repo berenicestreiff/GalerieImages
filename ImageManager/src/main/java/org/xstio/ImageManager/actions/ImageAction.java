@@ -3,6 +3,8 @@ package org.xstio.ImageManager.actions;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +13,6 @@ import org.xstio.ImageManager.repositories.GalerieRepository;
 import org.xstio.ImageManager.repositories.ImageDAO;
 import org.xstio.ImageManager.repositories.ImageRepository;
 
-import com.courtalon.springStrutsJpaExo4Form.metier.Illustration;
 import com.opensymphony.xwork2.ActionSupport;
 
 public class ImageAction extends ActionSupport {
@@ -24,10 +25,22 @@ public class ImageAction extends ActionSupport {
 	public ImageDAO getImageDAO() {return imageDAO;}
 	public void setImageDAO(ImageDAO imageDAO) {this.imageDAO = imageDAO;}
 
-	/*private GalerieRepository galerieRepository;
-	private GalerieRepository getGalerieRepository() {return this.galerieRepository;}
-	private void setGalerieRepository(GalerieRepository galerieRepository) {this.galerieRepository = galerieRepository;}
-	*/
+	private File image; // le fichier temporaire uploadé
+	private String imageContentType; // type du fichier uploadé
+	private String imageFileName; // le nom du fichier original
+	
+	public void setImage(File image) {this.image = image;}
+	public void setImageContentType(String imageContentType) {this.imageContentType = imageContentType;}
+	public void setImageFileName(String imageFileName) {this.imageFileName = imageFileName;}
+	public String getImageContentType() {return imageContentType;}
+	public String getImageFileName() {return imageFileName;}
+	private InputStream imageStream;
+	public InputStream getImageStream() {
+		return imageStream;
+	}
+	private String description;
+	public String getDescription() {return description;}
+	public void setDescription(String description) {this.description = description;}
 	
 	private List<Image> images;
 	public List<Image> getImages() {return images;}
@@ -45,7 +58,20 @@ public class ImageAction extends ActionSupport {
 	}
 	
 	public String listGalerie() {
-		images = imageDAO.findByGalerie(galId);
+		images = imageDAO.findByGalerie(getGalId());
+		return SUCCESS;
+	}
+
+	public String edit() {
+		return SUCCESS;
+	}
+
+	public String save() {
+		System.out.println("nom image uploadée = " + imageFileName);
+		System.out.println("content type image uploadée = " + imageContentType);
+		System.out.println("chemin du fichier temporaire uplaodé = " + image.getAbsolutePath()
+		+ " " + image.getName());
+		imageDAO.save(new Image(0, "image", getDescription(), new Date(), imageFileName, imageContentType), image);
 		return SUCCESS;
 	}
 	
@@ -57,7 +83,7 @@ public class ImageAction extends ActionSupport {
 		try {
 			imageStream = new FileInputStream(f);
 			return SUCCESS;
-		} catch (FileNotFoundException e) {log.error(e);}
+		} catch (FileNotFoundException e) {System.out.println(e);;}
 		return "error";
 	}
 }

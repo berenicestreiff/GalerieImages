@@ -52,6 +52,11 @@
 </bean>
 
 <bean id="imageDAO" class="org.xstio.ImageManager.repositories.ImageDAOImpl" />
+<bean id="galerieDAO" class="org.xstio.ImageManager.repositories.GalerieDAOImpl" />
+<bean id="fileStorageManager"
+	  class="org.xstio.ImageManager.utils.FileStorageManager">
+	  <property name="storageRoot" value="C:\stockage" />
+</bean>
 
 <tx:annotation-driven transaction-manager="transactionManager" />
 </beans>

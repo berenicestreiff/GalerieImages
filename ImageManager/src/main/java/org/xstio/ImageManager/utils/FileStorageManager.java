@@ -25,8 +25,7 @@ import com.opensymphony.xwork2.ActionSupport;
  * tous les noms de fichier et de répertoire son généré avec MD5 (hashage)
  * 
  */
-public class FileStorageManager {
-	private static Logger log = LogManager.getLogger(FileStorageManager.class); 
+public class FileStorageManager { 
 	
 	// reprtoire racine de notre stockage
 	private File storageRoot;
@@ -41,7 +40,7 @@ public class FileStorageManager {
 			 || !storageRoot.exists()
 			 || !storageRoot.isDirectory()) {
 			// probleme, pas de repertoire de base correct
-			log.error("repertoire de base de stockage non disponnible");
+			System.out.println("repertoire de base de stockage non disponnible");
 			return false;
 		}
 		// generation du nom du répertoire pour notre entitée
@@ -53,7 +52,7 @@ public class FileStorageManager {
 			entityRep.mkdirs();
 		
 		if (!entityRep.isDirectory()) {
-			log.error("impossible de creer la repertoire de stockage pour " + entityName);
+			System.out.println("impossible de creer la repertoire de stockage pour " + entityName);
 			return false;
 		}
 		try {
@@ -64,7 +63,7 @@ public class FileStorageManager {
 					"file_" + DigestUtils.md5Hex(entityName + id)),
 					StandardCopyOption.REPLACE_EXISTING);
 			return true;
-		} catch (IOException e) { log.error(e);}
+		} catch (IOException e) { System.out.println(e);}
 		return false;
 	}
 
@@ -73,7 +72,7 @@ public class FileStorageManager {
 				 || !storageRoot.exists()
 				 || !storageRoot.isDirectory()) {
 				// probleme, pas de repertoire de base correct
-				log.error("repertoire de base de stockage non disponnible");
+				System.out.println("repertoire de base de stockage non disponnible");
 				return Optional.empty();
 		}
 		String md5name = DigestUtils.md5Hex(entityName);

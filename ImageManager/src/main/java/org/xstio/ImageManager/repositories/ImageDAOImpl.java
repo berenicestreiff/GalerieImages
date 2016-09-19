@@ -17,6 +17,10 @@ public class ImageDAOImpl implements ImageDAO {
 	EntityManager em;
 	public EntityManager getEm() {return em;}
 	public void setEm(EntityManager em) {this.em = em;}
+	
+	public GalerieDAO galerieDAO;
+	public GalerieDAO getGalerieDAO() {return galerieDAO;}
+	public void setGalerieDAO(GalerieDAO galerieDAO) {this.galerieDAO = galerieDAO;}
 
 	private FileStorageManager fileStorageManager;
 	public FileStorageManager getFileStorageManager() {return fileStorageManager;}
@@ -33,14 +37,14 @@ public class ImageDAOImpl implements ImageDAO {
 	}
 	@Override
 	public List<Image> findByGalerie(int gid) {
-		TypedQuery<Image> tq = em.createQuery("SELECT i FROM Image WHERE galerie = :gid", Image.class);
-		tq.setParameter(1, gid);
+		TypedQuery<Image> tq = em.createQuery("SELECT i FROM Image AS i WHERE i.galerie.id = :gid", Image.class);
+		tq.setParameter("gid", gid);
 		return tq.getResultList();
 	}
 
 	@Override
 	public Image findById(int id) {
-		TypedQuery<Image> tq = em.createQuery("SELECT i FROM Image WHERE galerie = :id", Image.class);
+		TypedQuery<Image> tq = em.createQuery("SELECT i FROM Image AS i WHERE i.id = :id", Image.class);
 		tq.setParameter(1, id);
 		return tq.getSingleResult();
 	}
@@ -50,6 +54,7 @@ public class ImageDAOImpl implements ImageDAO {
 	public Image save(Image i, File f) {
 		Image existing = em.find(Image.class, i.getId());
 		if (existing == null) {
+			i.setGalerie(galerieDAO.findById(1));
 			em.persist(i);
 			// stockage effectif du fichier
 			fileStorageManager.saveFile("img", i.getId(), f);
